@@ -43,6 +43,7 @@
 		ABFE59519B596E51CEFDCCC0 /* libPods-ExpensesReactApp-ExpensesReactAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ExpensesReactApp-ExpensesReactAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0A881CF5CF3F2B244570E2A /* Pods-ExpensesReactApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExpensesReactApp.debug.xcconfig"; path = "Target Support Files/Pods-ExpensesReactApp/Pods-ExpensesReactApp.debug.xcconfig"; sourceTree = "<group>"; };
 		D00AAFFCFCFDA5787532823F /* Pods-ExpensesReactApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExpensesReactApp.release.xcconfig"; path = "Target Support Files/Pods-ExpensesReactApp/Pods-ExpensesReactApp.release.xcconfig"; sourceTree = "<group>"; };
+		DC9A251227E3E00A00BC9DED /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -116,6 +117,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				DC9A251127E3DFCE00BC9DED /* Fonts */,
 				13B07FAE1A68108700A75B9A /* ExpensesReactApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ExpensesReactAppTests */,
@@ -137,6 +139,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		DC9A251127E3DFCE00BC9DED /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				DC9A251227E3E00A00BC9DED /* MaterialCommunityIcons.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		E233CBF5F47BEE60B243DCF8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,7 +155,6 @@
 				6C97AB639B58BBB4B15BBE30 /* Pods-ExpensesReactApp-ExpensesReactAppTests.debug.xcconfig */,
 				1D0AE47A65C8663E3B452821 /* Pods-ExpensesReactApp-ExpensesReactAppTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
