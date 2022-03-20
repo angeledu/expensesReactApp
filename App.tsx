@@ -1,12 +1,19 @@
+/* eslint-disable prettier/prettier */
+import 'react-native-gesture-handler';
 import React from 'react';
-import { SafeAreaView, Text, View } from "react-native";
+import { NavigationContainer } from '@react-navigation/native';
+import { Navigation } from './src/navigation/Navigation';
+
 
 
 const App = () => {
+
+
+
   return (
-    <SafeAreaView>
-        <Text>Hola App</Text>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Navigation />
+    </NavigationContainer>
   )
 };
 
