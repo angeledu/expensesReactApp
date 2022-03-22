@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "286331386798",
+    "project_id": "expensereactapp",
+    "storage_bucket": "expensereactapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286331386798:android:ec0b26dc063b8c61fa263f",
+        "android_client_info": {
+          "package_name": "com.expensesreactapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "286331386798-ruldph17b93ibc8n78cr0fikgojn9sb7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.expensesreactapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "286331386798-t1alm3okuie524fq2dkvoh4hckeftn9a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCj6j9Rs83N7jTVujC_Vztvls47I14XJww"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "286331386798-t1alm3okuie524fq2dkvoh4hckeftn9a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
