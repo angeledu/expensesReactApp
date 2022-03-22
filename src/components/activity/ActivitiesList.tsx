@@ -1,18 +1,22 @@
-import React, {FC} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {FC, useEffect, useState} from 'react';
+import {View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
-import {Modal, Portal, Provider, Text} from 'react-native-paper';
+import {Modal, Portal, Provider} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {mockData} from '../../mockData';
+import {getExpenses} from '../../services/services';
 import Cards from '../cards/Cards';
 import ExpenseCard from '../cards/ExpenseCard';
 
 const ActivitiesList: FC = props => {
   const [visible, setVisible] = React.useState(false);
-  const dataURL: any = mockData;
+  const [expenses, setExpenses] = useState([]);
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+
+  useEffect(() => {
+    getExpenses({setExpenses});
+  }, []);
 
   function renderItem({item}) {
     return (
@@ -28,8 +32,8 @@ const ActivitiesList: FC = props => {
   return (
     <SafeAreaView>
       <FlatList
-        data={dataURL}
-        keyExtractor={item => item.id}
+        data={expenses}
+        keyExtractor={item => item.key}
         renderItem={renderItem}
       />
       <Provider>
