@@ -10,3 +10,15 @@ export const theme = {
     error: '#f13a59',
   },
 }
+
+export const darkTheme = {
+  dark: true,
+  colors: {
+      primary: '#75CEDB',
+      background: 'black',
+      card: 'black',
+      text: 'white',
+      border: 'grey',
+      notification: 'grey',
+  }
+}
