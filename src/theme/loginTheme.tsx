@@ -1,62 +1,29 @@
-/* eslint-disable prettier/prettier */
 import { StyleSheet } from 'react-native';
+import { theme } from './theme';
 
-
-export const loginStyles = StyleSheet.create({
-    formContainer: {
-        flex: 1,
-        paddingHorizontal: 30,
-        justifyContent:'center',
-        height: 600,
-        marginBottom: 50
+export const stylesLogin = StyleSheet.create({
+    container :{
+      flex: 1,
+      backgroundColor: '#f9fafd',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 20,
     },
-    title: {
-        color: 'white',
-        fontSize: 30,
-        fontWeight: 'bold',
-        marginTop: 20
+    logo:{
+      height: 200,
+      width: 200,
+      resizeMode: 'cover',
     },
-    label: {
-        marginTop: 25,
-        color: 'white',
-        fontWeight: 'bold',
+    row: {
+      flexDirection: 'row',
+      marginTop: 4,
     },
-    inputField: {
-        color:'white',
-        fontSize: 20,
+    forgot: {
+      fontSize: 13,
+      color: theme.colors.secondary,
     },
-    inputFieldIOS: {
-        borderBottomColor: 'white',
-        borderBottomWidth: 2,
-        paddingBottom: 4
+    link: {
+      fontWeight: 'bold',
+      color: theme.colors.primary,
     },
-    buttonContainer: {
-        alignItems: 'center',
-        marginTop: 50
-    },
-    button: {
-        borderWidth: 2,
-        borderColor: 'white',
-        paddingHorizontal: 20,
-        paddingVertical: 5,
-        borderRadius: 100
-    },
-    buttonText: {
-        fontSize: 18,
-        color: 'white'
-    },
-    newUserContainer: {
-        alignItems: 'flex-end',
-        marginTop: 10
-    },
-    buttonReturn: {
-        position: 'absolute',
-        top: 50,
-        left: 20,
-        borderWidth: 1,
-        borderColor: 'white',
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        borderRadius: 100
-    }
 });

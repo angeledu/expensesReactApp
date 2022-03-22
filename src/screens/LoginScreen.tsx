@@ -1,93 +1,69 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
-import { SafeAreaView, KeyboardAvoidingView, Platform, View } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Button, TextInput, Text } from 'react-native-paper';
-import { loginStyles } from '../theme/loginTheme';
-import { useForm } from '../hooks/useForm';
+import { Text } from 'react-native-paper';
+
+import { Button } from '../components/Button'
+import { TextInput } from '../components/TextInput'
+
+import { stylesLogin } from '../theme/loginTheme';
+import { theme } from '../theme/theme';
+
 
 export const LoginScreen = () => {
 
   const navigator = useNavigation<any>();
 
-  const { email, password, onChange } = useForm({
-    email: '',
-    password: '' 
- });
+  const [email, setEmail] = useState({ value: '', error: '' })
+  const [password, setPassword] = useState({ value: '', error: '' })
+
+const onLoginPressed = () => {
+  navigator.navigate('HomeScreen');
+  }
 
 
   return (
-    <>
-        
-        <KeyboardAvoidingView
-                style={{ flex: 1 }}
-                behavior={ (Platform.OS === 'ios') ? 'padding': 'height' }
-            >
+      <View style={ stylesLogin.container }>
+
+            <Image 
+              source={require('../assets/gastos.png')}
+              style={stylesLogin.logo}
+            />
+            <TextInput
+            label="Email"
+            returnKeyType="next"
+            value={ email.value }
+            onChangeText={(text) => setEmail({ value: text, error: '' })}
+            error={!!email.error}
+            errorText={email.error}
+            autoCapitalize="none"
+            textContentType="emailAddress"
+            keyboardType="email-address"
+          />
+
+          <TextInput
+            label="Password"
+            returnKeyType="done"
+            value={password.value}
+            onChangeText={(text) => setPassword({ value: text, error: '' })}
+            error={!!password.error}
+            errorText={password.error}
+            secureTextEntry
+          />
 
 
-                <View style={ loginStyles.formContainer }>                
-                    {/* Keyboard avoid view */}
-                    {/* <WhiteLogo /> */}
-
-                    <Text style={ loginStyles.title }>Login</Text>
-
-                    <Text style={ loginStyles.label }>Email:</Text>
-                    <TextInput 
-                        placeholder="Ingrese su email:"
-                        placeholderTextColor="rgba(255,255,255,0.4)"
-                        keyboardType="email-address"
-                        underlineColorAndroid="white"
-                        style={[ 
-                            loginStyles.inputField,
-                            ( Platform.OS === 'ios' ) && loginStyles.inputFieldIOS
-                        ]}
-                        selectionColor="white"
-
-                        onChangeText={ (value) => onChange(value, 'email') }
-                        value={ email }
-
-
-                        autoCapitalize="none"
-                        autoCorrect={ false }
-                    />
-
-
-                    <Text style={ loginStyles.label }>Contraseña:</Text>
-                    <TextInput 
-                        placeholder="******"
-                        placeholderTextColor="rgba(255,255,255,0.4)"
-                        underlineColorAndroid="white"
-                        secureTextEntry
-                        style={[ 
-                            loginStyles.inputField,
-                            ( Platform.OS === 'ios' ) && loginStyles.inputFieldIOS
-                        ]}
-                        selectionColor="white"
-
-                        onChangeText={ (value) => onChange(value, 'password') }
-                        value={ password }
-
-                        autoCapitalize="none"
-                        autoCorrect={ false }
-                    />
-
-
-                    {/* Boton login */}
-                    <View style={ loginStyles.buttonContainer }>
-                        <Button icon="camera" mode="contained" onPress={ () => navigator.navigate('HomeScreen') }>
-                           Ingresar
-                        </Button>
-                    </View>
-
-                    {/* Crear una nueva cuenta */}
-                    <View style={ loginStyles.newUserContainer  }>
-                        <Button icon="camera" mode="contained" onPress={ () => navigator.navigate('HomeScreen') }>
-                            Press me
-                        </Button>
-                    </View>
-                </View>
-                
-            </KeyboardAvoidingView>
-    </>
+          <Button mode="contained" onPress={onLoginPressed}>
+            Login
+          </Button>
+          <View style={ stylesLogin.row }>
+            <Text>Don’t have an account? </Text>
+            <TouchableOpacity onPress={() => navigator.replace('RegisterScreen')}>
+              <Text style={ stylesLogin.link }>Sign up</Text>
+            </TouchableOpacity>
+          </View>
+      </View>
+            
   )
 }
+
