@@ -14,7 +14,7 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-
+import auth from '@react-native-firebase/auth';
 
 export const LoginScreen = () => {
 
@@ -32,19 +32,16 @@ const onLoginPressed = () => {
 
 const signIn = async () => {
   try {
-    await GoogleSignin.hasPlayServices();
-    const userInfo = await GoogleSignin.signIn();
-    setloggedIn(true)
+    // setloggedIn(true);
+      const { idToken } = await GoogleSignin.signIn();
+
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      
+      await  auth().signInWithCredential(googleCredential);
+
+      navigator.navigate('HomeScreen');
+      
   } catch (error) {
-    // if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-    //   // user cancelled the login flow
-    // } else if (error.code === statusCodes.IN_PROGRESS) {
-    //   // operation (e.g. sign in) is in progress already
-    // } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-    //   // play services not available or outdated
-    // } else {
-    //   // some other error happened
-    // }
     console.log(error)
   }
 };
@@ -54,8 +51,8 @@ useEffect(() => {
   GoogleSignin.configure({
     scopes: ['email'],
     webClientId:
-      '286331386798-ruldph17b93ibc8n78cr0fikgojn9sb7.apps.googleusercontent.com',
-    offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+      '286331386798-t1alm3okuie524fq2dkvoh4hckeftn9a.apps.googleusercontent.com',
+    offlineAccess: true,
   });
 }, []);
 
@@ -96,7 +93,7 @@ useEffect(() => {
 
 
           <GoogleSigninButton
-                style={{width: 192, height: 48}}
+                style={{width: 192, height: 55}}
                 size={GoogleSigninButton.Size.Wide}
                 color={GoogleSigninButton.Color.Dark}
                 onPress={signIn}

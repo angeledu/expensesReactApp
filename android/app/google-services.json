@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "286331386798-ruldph17b93ibc8n78cr0fikgojn9sb7.apps.googleusercontent.com",
+          "client_id": "286331386798-j2314gje84en008920mkp18q8dq8v9pl.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.expensesreactapp",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+            "certificate_hash": "e14b877f466b107309f230d7c1d9a917cf2bf71d"
           }
         },
         {
@@ -38,6 +38,13 @@
             {
               "client_id": "286331386798-t1alm3okuie524fq2dkvoh4hckeftn9a.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "286331386798-2u5pulq34mfe64iqt51680a643kdduo0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.expensesApp"
+              }
             }
           ]
         }
