@@ -1,93 +1,111 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
-import { SafeAreaView, KeyboardAvoidingView, Platform, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Button, TextInput, Text } from 'react-native-paper';
-import { loginStyles } from '../theme/loginTheme';
-import { useForm } from '../hooks/useForm';
+import { Text } from 'react-native-paper';
+
+import { Button } from '../components/formControls/Button';
+import { TextInput } from '../components/formControls/TextInput';
+
+import { stylesLogin } from '../theme/loginTheme';
+
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
 
 export const LoginScreen = () => {
 
   const navigator = useNavigation<any>();
 
-  const { email, password, onChange } = useForm({
-    email: '',
-    password: '' 
- });
+  const [email, setEmail] = useState({ value: '', error: '' })
+  const [password, setPassword] = useState({ value: '', error: '' })
+
+  const [loggedIn, setloggedIn] = useState(false);
+  const [userInfo, setuserInfo] = useState([]);
+
+const onLoginPressed = () => {
+  navigator.navigate('HomeScreen');
+}
+
+const signIn = async () => {
+  try {
+    // setloggedIn(true);
+      const { idToken } = await GoogleSignin.signIn();
+
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      
+      await  auth().signInWithCredential(googleCredential);
+
+      navigator.navigate('HomeScreen');
+      
+  } catch (error) {
+    console.log(error)
+  }
+};
+
+
+useEffect(() => {
+  GoogleSignin.configure({
+    scopes: ['email'],
+    webClientId:
+      '286331386798-t1alm3okuie524fq2dkvoh4hckeftn9a.apps.googleusercontent.com',
+    offlineAccess: true,
+  });
+}, []);
 
 
   return (
-    <>
-        
-        <KeyboardAvoidingView
-                style={{ flex: 1 }}
-                behavior={ (Platform.OS === 'ios') ? 'padding': 'height' }
-            >
+      <View style={ stylesLogin.container }>
+
+            <Image 
+              source={require('../assets/gastos.png')}
+              style={stylesLogin.logo}
+            />
+            <TextInput
+            label="Email"
+            returnKeyType="next"
+            value={ email.value }
+            onChangeText={(text) => setEmail({ value: text, error: '' })}
+            error={!!email.error}
+            errorText={email.error}
+            autoCapitalize="none"
+            textContentType="emailAddress"
+            keyboardType="email-address"
+          />
+
+          <TextInput
+            label="Password"
+            returnKeyType="done"
+            value={password.value}
+            onChangeText={(text) => setPassword({ value: text, error: '' })}
+            error={!!password.error}
+            errorText={password.error}
+            secureTextEntry
+          />
 
 
-                <View style={ loginStyles.formContainer }>                
-                    {/* Keyboard avoid view */}
-                    {/* <WhiteLogo /> */}
-
-                    <Text style={ loginStyles.title }>Login</Text>
-
-                    <Text style={ loginStyles.label }>Email:</Text>
-                    <TextInput 
-                        placeholder="Ingrese su email:"
-                        placeholderTextColor="rgba(255,255,255,0.4)"
-                        keyboardType="email-address"
-                        underlineColorAndroid="white"
-                        style={[ 
-                            loginStyles.inputField,
-                            ( Platform.OS === 'ios' ) && loginStyles.inputFieldIOS
-                        ]}
-                        selectionColor="white"
-
-                        onChangeText={ (value) => onChange(value, 'email') }
-                        value={ email }
+          <Button mode="contained" onPress={onLoginPressed}>
+            Login
+          </Button>
 
 
-                        autoCapitalize="none"
-                        autoCorrect={ false }
-                    />
-
-
-                    <Text style={ loginStyles.label }>Contraseña:</Text>
-                    <TextInput 
-                        placeholder="******"
-                        placeholderTextColor="rgba(255,255,255,0.4)"
-                        underlineColorAndroid="white"
-                        secureTextEntry
-                        style={[ 
-                            loginStyles.inputField,
-                            ( Platform.OS === 'ios' ) && loginStyles.inputFieldIOS
-                        ]}
-                        selectionColor="white"
-
-                        onChangeText={ (value) => onChange(value, 'password') }
-                        value={ password }
-
-                        autoCapitalize="none"
-                        autoCorrect={ false }
-                    />
-
-
-                    {/* Boton login */}
-                    <View style={ loginStyles.buttonContainer }>
-                        <Button icon="camera" mode="contained" onPress={ () => navigator.navigate('HomeScreen') }>
-                           Ingresar
-                        </Button>
-                    </View>
-
-                    {/* Crear una nueva cuenta */}
-                    <View style={ loginStyles.newUserContainer  }>
-                        <Button icon="camera" mode="contained" onPress={ () => navigator.navigate('HomeScreen') }>
-                            Press me
-                        </Button>
-                    </View>
-                </View>
-                
-            </KeyboardAvoidingView>
-    </>
+          <GoogleSigninButton
+                style={{width: 192, height: 55}}
+                size={GoogleSigninButton.Size.Wide}
+                color={GoogleSigninButton.Color.Dark}
+                onPress={signIn}
+              />
+          <View style={ stylesLogin.row }>
+            <Text>Don’t have an account? </Text>
+            <TouchableOpacity onPress={() => navigator.replace('RegisterScreen')}>
+              <Text style={ stylesLogin.link }>Sign up</Text>
+            </TouchableOpacity>
+          </View>
+      </View>
+            
   )
 }
+
