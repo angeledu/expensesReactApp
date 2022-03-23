@@ -1,14 +1,13 @@
 /* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Text } from 'react-native-paper';
 
-import { Button } from '../components/Button'
-import { TextInput } from '../components/TextInput'
+import { Button } from '../components/formControls/Button';
+import { TextInput } from '../components/formControls/TextInput';
 
 import { stylesLogin } from '../theme/loginTheme';
-import { theme } from '../theme/theme';
 
 import {
   GoogleSignin,
@@ -53,9 +52,9 @@ const signIn = async () => {
 
 useEffect(() => {
   GoogleSignin.configure({
-    scopes: ['email'], // what API you want to access on behalf of the user, default is email and profile
+    scopes: ['email'],
     webClientId:
-      '418977770929-g9ou7r9eva1u78a3anassxxxxxxx.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+      '286331386798-ruldph17b93ibc8n78cr0fikgojn9sb7.apps.googleusercontent.com',
     offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
   });
 }, []);

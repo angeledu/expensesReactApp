@@ -1,12 +1,9 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { TextInput as Input } from 'react-native-paper';
-import { theme } from '../theme/theme';
+import { theme } from '../../theme/theme';
 
-interface Props {
-    errorText: string;
-    description?: string
-}
 
 export type CustomInputProps = {
     errorText: string;

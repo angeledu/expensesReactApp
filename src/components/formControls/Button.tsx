@@ -1,7 +1,8 @@
+/* eslint-disable prettier/prettier */
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { Button as RNButton } from 'react-native-paper';
-import { theme } from '../theme/theme';
+import { theme } from '../../theme/theme';
 
 
 export type CustomButtonProps = {
