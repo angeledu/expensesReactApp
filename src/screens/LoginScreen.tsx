@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Text } from 'react-native-paper';
@@ -9,12 +9,8 @@ import { TextInput } from '../components/formControls/TextInput';
 
 import { stylesLogin } from '../theme/loginTheme';
 
-import {
-  GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
-} from '@react-native-google-signin/google-signin';
-import auth from '@react-native-firebase/auth';
+import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
+import { AuthContext } from '../context/AuthContext';
 
 export const LoginScreen = () => {
 
@@ -23,28 +19,13 @@ export const LoginScreen = () => {
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
 
-  const [loggedIn, setloggedIn] = useState(false);
-  const [userInfo, setuserInfo] = useState([]);
+  const { signIn, signInGoogle} = useContext(AuthContext);
 
 const onLoginPressed = () => {
   navigator.navigate('HomeScreen');
 }
 
-const signIn = async () => {
-  try {
-    // setloggedIn(true);
-      const { idToken } = await GoogleSignin.signIn();
 
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      
-      await  auth().signInWithCredential(googleCredential);
-
-      navigator.navigate('HomeScreen');
-      
-  } catch (error) {
-    console.log(error)
-  }
-};
 
 
 useEffect(() => {
@@ -96,11 +77,11 @@ useEffect(() => {
                 style={{width: 192, height: 55}}
                 size={GoogleSigninButton.Size.Wide}
                 color={GoogleSigninButton.Color.Dark}
-                onPress={signIn}
+                onPress={signInGoogle}
               />
           <View style={ stylesLogin.row }>
             <Text>Don’t have an account? </Text>
-            <TouchableOpacity onPress={() => navigator.replace('RegisterScreen')}>
+            <TouchableOpacity onPress={() => navigator.replace('SignUpScreen')}>
               <Text style={ stylesLogin.link }>Sign up</Text>
             </TouchableOpacity>
           </View>

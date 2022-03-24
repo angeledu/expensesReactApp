@@ -1,22 +1,30 @@
 /* eslint-disable prettier/prettier */
 import 'react-native-gesture-handler';
 import React from 'react';
-import { Provider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { Navigation } from './src/navigation/Navigation';
-import { theme } from './src/theme/theme';
+// import { theme } from './src/theme/theme';
+// import { Provider } from 'react-native-paper';
+import { AuthProvider } from './src/context/AuthContext';
+
+
+const AppState = ({ children }: any ) => {
+  return (
+    <AuthProvider>
+       { children }
+    </AuthProvider>
+  )
+}
 
 
 const App = () => {
 
-
-
   return (
-    <Provider theme={theme}>
       <NavigationContainer>
-        <Navigation />
+        <AppState>
+           <Navigation />
+        </AppState>
       </NavigationContainer>
-    </Provider>
   )
 };
 
