@@ -15,7 +15,8 @@ export const SignUpScreen = () => {
  const navigator = useNavigation<any>();
 
 
- const { email, password, confirmPassword, onChange } = useForm({
+ const { nombre, email, password, confirmPassword, onChange } = useForm({
+    nombre: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -25,6 +26,7 @@ export const SignUpScreen = () => {
     console.log({email, password});
     Keyboard.dismiss();
     signUp({
+       nombre,
         email,
         password
     });
@@ -34,6 +36,15 @@ export const SignUpScreen = () => {
 
     <View style={styles.container}>
         <Text style={styles.text}>Create an account</Text>
+
+        <TextInput
+            label="Nombre"
+            onChangeText={ (value) => onChange(value, 'nombre') }
+            value = { nombre }
+            placeholder="Nombre"
+            autoCapitalize="words"
+            autoCorrect={ false }
+        />
 
         <TextInput
             label="Email"

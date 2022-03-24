@@ -9,7 +9,7 @@ const Cards: FC<CardsProps> = props => {
       <Card.Title
         title={props.title}
         subtitle={`Your expense were: ${props.subtitle}`}
-        left={props => <Avatar.Icon {...props} icon="cash-check" />}
+        left={() => <Avatar.Icon size={48} icon={props.icon} />}
       />
       <Divider />
     </TouchableOpacity>
