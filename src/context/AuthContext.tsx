@@ -1,13 +1,13 @@
 /* eslint-disable prettier/prettier */
  import React, { createContext, useReducer } from 'react';
  import auth from '@react-native-firebase/auth';
-import { LoginData, RegisterData, Usuario } from '../interfaces/appInterfaces';
+import { LoginData, RegisterData, Usuariox } from '../interfaces/appInterfaces';
 import { authReducer, AuthState } from './authReducer';
 
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
  type AuthContextProps = {
-    user: Usuario | null;
+    user: Usuariox | null;
     token: string | null;
     status: 'checking' | 'authenticated' | 'not-authenticated';
     signUp: ( registerData: RegisterData ) => void;
@@ -32,7 +32,18 @@ export const AuthProvider = ({ children }: any) => {
 
     const signIn = async ( {email, password }: LoginData ) => {
         try{
-            await auth().signInWithEmailAndPassword(email, password);
+
+            await auth().signInWithEmailAndPassword(email, password)
+            .then( ({ user }) => {
+                dispatch({ 
+                    type: 'signUp',
+                    payload: {
+                        token: user.uid,
+                        user: user
+                    }
+                });
+
+            })
 
         } catch(e){
             console.log(e);
@@ -42,13 +53,18 @@ export const AuthProvider = ({ children }: any) => {
     const signInGoogle = async () => {
         try {
             const { idToken } = await GoogleSignin.signIn();
-      
             const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-            
-            await  auth().signInWithCredential(googleCredential);
-      
-           // navigator.navigate('HomeScreen');
-            
+            await  auth().signInWithCredential(googleCredential)
+            .then( ({ user }) => {
+                dispatch({ 
+                    type: 'signUp',
+                    payload: {
+                        token: user.uid,
+                        user: user
+                    }
+                });
+            });
+
         } catch (error) {
           console.log(error)
         }
@@ -60,10 +76,15 @@ export const AuthProvider = ({ children }: any) => {
              .then( async({ user }) => {
 
                 await user.updateProfile({ displayName: nombre });
-/*
-                dispatch(
-                    signUp( user.uid, user.displayName )
-                );*/
+
+                dispatch({ 
+                    type: 'signUp',
+                    payload: {
+                        token: user.uid,
+                        user: user
+                    }
+                });
+
             })
         }catch (e){
             console.log(e);

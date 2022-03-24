@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { useNavigation } from '@react-navigation/native';
-import React, { useContext, useState } from 'react';
+import { StackScreenProps } from '@react-navigation/stack';
+import React, { useContext } from 'react';
 import { Keyboard, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { Button } from '../components/formControls/Button';
@@ -8,11 +8,12 @@ import { TextInput } from '../components/formControls/TextInput';
 import { AuthContext } from '../context/AuthContext';
 import { useForm } from '../hooks/useForm';
 
-export const SignUpScreen = () => {
+interface Props extends StackScreenProps<any,any>{}
+
+export const SignUpScreen = ( { navigation }: Props ) => {
 
  const { signUp } = useContext(AuthContext);
 
- const navigator = useNavigation<any>();
 
 
  const { nombre, email, password, confirmPassword, onChange } = useForm({
@@ -89,7 +90,7 @@ export const SignUpScreen = () => {
    
     <TouchableOpacity
       style={styles.navButton}
-      onPress={() => navigator.navigate('LoginScreen')}>
+      onPress={() => navigation.navigate('LoginScreen')}>
       <Text style={styles.navButtonText}>Have an account? Sign In</Text>
     </TouchableOpacity>
   </View>
@@ -106,7 +107,6 @@ const styles = StyleSheet.create({
       padding: 20,
     },
     text: {
-      fontFamily: 'Kufam-SemiBoldItalic',
       fontSize: 28,
       marginBottom: 10,
       color: '#051d5f',

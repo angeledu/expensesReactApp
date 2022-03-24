@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import React, { useContext, useEffect, useState } from 'react';
-import { View, TouchableOpacity, Image } from 'react-native';
+import React, { useContext, useEffect } from 'react';
+import { View, TouchableOpacity, Image, Keyboard } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Text } from 'react-native-paper';
 
@@ -11,18 +11,27 @@ import { stylesLogin } from '../theme/loginTheme';
 
 import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
 import { AuthContext } from '../context/AuthContext';
+import { useForm } from '../hooks/useForm';
+import { StackScreenProps } from '@react-navigation/stack';
 
-export const LoginScreen = () => {
+interface Props extends StackScreenProps<any, any> {}
 
-  const navigator = useNavigation<any>();
+export const LoginScreen = ({ navigation }: Props) => {
 
-  const [email, setEmail] = useState({ value: '', error: '' })
-  const [password, setPassword] = useState({ value: '', error: '' })
+ // const navigator = useNavigation<any>();
 
   const { signIn, signInGoogle} = useContext(AuthContext);
 
+  const { email, password, onChange } = useForm({
+     email: '',
+     password: '' 
+  });
+
 const onLoginPressed = () => {
-  navigator.navigate('HomeScreen');
+  //navigator.navigate('HomeScreen');
+  console.log({email, password});
+  Keyboard.dismiss();
+  signIn({ email, password });
 }
 
 
@@ -48,10 +57,8 @@ useEffect(() => {
             <TextInput
             label="Email"
             returnKeyType="next"
-            value={ email.value }
-            onChangeText={(text) => setEmail({ value: text, error: '' })}
-            error={!!email.error}
-            errorText={email.error}
+            value={ email }
+            onChangeText={ (value) => onChange(value, 'email') }
             autoCapitalize="none"
             textContentType="emailAddress"
             keyboardType="email-address"
@@ -60,10 +67,8 @@ useEffect(() => {
           <TextInput
             label="Password"
             returnKeyType="done"
-            value={password.value}
-            onChangeText={(text) => setPassword({ value: text, error: '' })}
-            error={!!password.error}
-            errorText={password.error}
+            value={password}
+            onChangeText={ (value) => onChange(value, 'password') }
             secureTextEntry
           />
 
@@ -81,7 +86,7 @@ useEffect(() => {
               />
           <View style={ stylesLogin.row }>
             <Text>Don’t have an account? </Text>
-            <TouchableOpacity onPress={() => navigator.replace('SignUpScreen')}>
+            <TouchableOpacity onPress={() => navigation.replace('SignUpScreen')}>
               <Text style={ stylesLogin.link }>Sign up</Text>
             </TouchableOpacity>
           </View>

@@ -1,15 +1,15 @@
 /* eslint-disable prettier/prettier */
 
-import { Usuario } from "../interfaces/appInterfaces";
+import { Usuario, Usuariox } from "../interfaces/appInterfaces";
 
 export interface AuthState {
     status: 'checking' | 'authenticated' | 'not-authenticated';
     token: string | null;
-    user:  null;
+    user:  Usuariox | null;
 }
 
 type AuthAction = 
-    | { type: 'signUp', payload: { token: string, user: Usuario } }
+    | { type: 'signUp', payload: { token: string, user: Usuariox } }
     | { type: 'notAuthenticated' }
     | { type: 'logout' }
 
