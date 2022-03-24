@@ -6,7 +6,7 @@ import { theme } from '../../theme/theme';
 
 
 export type CustomInputProps = {
-    errorText: string;
+    errorText?: string;
     description?: string;
   } & React.ComponentProps<typeof Input>;
 
