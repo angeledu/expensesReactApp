@@ -1,18 +1,18 @@
-import React, {FC, useEffect, useState} from 'react';
-import {View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
 import {FlatList} from 'react-native-gesture-handler';
-import {Modal, Portal, Provider} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {getExpenses} from '../../services/services';
 import Cards from '../cards/Cards';
-import ExpenseCard from '../cards/ExpenseCard';
 
-const ActivitiesList: FC = props => {
-  const [visible, setVisible] = React.useState(false);
+type Nav = {
+  navigate: (value: string, param: any) => void;
+};
+
+const ActivitiesList = props => {
   const [expenses, setExpenses] = useState([]);
 
-  const showModal = () => setVisible(true);
-  const hideModal = () => setVisible(false);
+  const navigation = useNavigation<Nav>();
 
   useEffect(() => {
     getExpenses({setExpenses});
@@ -21,7 +21,7 @@ const ActivitiesList: FC = props => {
   function renderItem({item}) {
     return (
       <Cards
-        onPress={showModal}
+        onPress={() => navigation.navigate('DetailsScreen', item)}
         title={item.expense_title}
         subtitle={item.expense_value}
         icon={item.icon}
@@ -36,15 +36,6 @@ const ActivitiesList: FC = props => {
         keyExtractor={item => item.key}
         renderItem={renderItem}
       />
-      <Provider>
-        <Portal>
-          <Modal visible={visible} onDismiss={hideModal}>
-            <View>
-              <ExpenseCard onPress={hideModal} />
-            </View>
-          </Modal>
-        </Portal>
-      </Provider>
     </SafeAreaView>
   );
 };
