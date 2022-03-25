@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useContext, useEffect } from 'react';
-import { View, TouchableOpacity, Image, Keyboard } from 'react-native';
+import { View, TouchableOpacity, Image, Keyboard, Platform, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Text } from 'react-native-paper';
 
@@ -48,50 +48,58 @@ useEffect(() => {
 
 
   return (
-      <View style={ stylesLogin.container }>
 
-            <Image 
-              source={require('../assets/gastos.png')}
-              style={stylesLogin.logo}
-            />
-            <TextInput
-            label="Email"
-            returnKeyType="next"
-            value={ email }
-            onChangeText={ (value) => onChange(value, 'email') }
-            autoCapitalize="none"
-            textContentType="emailAddress"
-            keyboardType="email-address"
-          />
+    <>
+        <KeyboardAvoidingView
+            style={{ flex: 1, backgroundColor: '#5856D6' }}
+            behavior={ ( Platform.OS === 'ios') ? 'padding': 'height' }
+          >
+            <View style={ stylesLogin.container }>
 
-          <TextInput
-            label="Password"
-            returnKeyType="done"
-            value={password}
-            onChangeText={ (value) => onChange(value, 'password') }
-            secureTextEntry
-          />
+                  <Image 
+                    source={require('../assets/gastos.png')}
+                    style={stylesLogin.logo}
+                  />
+                  <TextInput
+                  label="Email"
+                  returnKeyType="next"
+                  value={ email }
+                  onChangeText={ (value) => onChange(value, 'email') }
+                  autoCapitalize="none"
+                  textContentType="emailAddress"
+                  keyboardType="email-address"
+                />
+
+                <TextInput
+                  label="Password"
+                  returnKeyType="done"
+                  value={password}
+                  onChangeText={ (value) => onChange(value, 'password') }
+                  secureTextEntry
+                />
 
 
-          <Button mode="contained" onPress={onLoginPressed}>
-            Login
-          </Button>
+                <Button mode="contained" onPress={onLoginPressed}>
+                  Login
+                </Button>
 
 
-          <GoogleSigninButton
-                style={{width: 192, height: 55}}
-                size={GoogleSigninButton.Size.Wide}
-                color={GoogleSigninButton.Color.Dark}
-                onPress={signInGoogle}
-              />
-          <View style={ stylesLogin.row }>
-            <Text>Don’t have an account? </Text>
-            <TouchableOpacity onPress={() => navigation.replace('SignUpScreen')}>
-              <Text style={ stylesLogin.link }>Sign up</Text>
-            </TouchableOpacity>
-          </View>
-      </View>
-            
+                <GoogleSigninButton
+                      style={{width: 192, height: 55}}
+                      size={GoogleSigninButton.Size.Wide}
+                      color={GoogleSigninButton.Color.Dark}
+                      onPress={signInGoogle}
+                    />
+                <View style={ stylesLogin.row }>
+                  <Text>Don’t have an account? </Text>
+                  <TouchableOpacity onPress={() => navigation.replace('SignUpScreen')}>
+                    <Text style={ stylesLogin.link }>Sign up</Text>
+                  </TouchableOpacity>
+                </View>
+            </View>
+
+        </KeyboardAvoidingView>
+    </>
   )
 }
 
