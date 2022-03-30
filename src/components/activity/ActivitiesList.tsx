@@ -48,7 +48,7 @@ const loader = () => {
   return (
     !lastPost ?
     <View>
-      <ActivityIndicator color='red' size={50} />
+      <ActivityIndicator color='#4682B4' size={50} />
     </View> : null
   );
 };
