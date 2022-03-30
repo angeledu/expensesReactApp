@@ -1,10 +1,11 @@
 /* eslint-disable prettier/prettier */
- import React, { createContext, useReducer } from 'react';
+ import React, { createContext, useEffect, useReducer } from 'react';
  import auth from '@react-native-firebase/auth';
 import { LoginData, RegisterData, Usuariox } from '../interfaces/appInterfaces';
 import { authReducer, AuthState } from './authReducer';
 
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
  type AuthContextProps = {
     user: Usuariox | null;
@@ -30,11 +31,32 @@ export const AuthProvider = ({ children }: any) => {
     
     const [ state, dispatch ] = useReducer( authReducer, authInicialState);
 
+    useEffect(() => {
+        checkToken();
+    }, [])
+
+    const checkToken = async() => {
+        const token = await AsyncStorage.getItem('token');
+        const usuario = await AsyncStorage.getItem('usuario');
+        
+        // No token, no autenticado
+        if ( !token ) return dispatch({ type: 'notAuthenticated' });
+
+        // Hay token
+        dispatch({ 
+            type: 'signUp',
+            payload: {
+                token: token,
+                user: JSON.parse(usuario!)
+            }
+        });
+    }
+
     const signIn = async ( {email, password }: LoginData ) => {
         try{
 
             await auth().signInWithEmailAndPassword(email, password)
-            .then( ({ user }) => {
+            .then( async ({ user }) => {
                 dispatch({ 
                     type: 'signUp',
                     payload: {
@@ -43,6 +65,8 @@ export const AuthProvider = ({ children }: any) => {
                     }
                 });
 
+                await AsyncStorage.setItem('token',user.uid );
+                await AsyncStorage.setItem('usuario', JSON.stringify(user));
             })
 
         } catch(e){
@@ -55,7 +79,7 @@ export const AuthProvider = ({ children }: any) => {
             const { idToken } = await GoogleSignin.signIn();
             const googleCredential = auth.GoogleAuthProvider.credential(idToken);
             await  auth().signInWithCredential(googleCredential)
-            .then( ({ user }) => {
+            .then( async ({ user }) => {
                 dispatch({ 
                     type: 'signUp',
                     payload: {
@@ -63,6 +87,9 @@ export const AuthProvider = ({ children }: any) => {
                         user: user
                     }
                 });
+                
+                await AsyncStorage.setItem('token',user.uid );
+                await AsyncStorage.setItem('usuario', JSON.stringify(user));
             });
 
         } catch (error) {
