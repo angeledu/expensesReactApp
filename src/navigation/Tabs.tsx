@@ -14,9 +14,9 @@ export const Tabs = () => {
     return (
       <Tab.Navigator
       initialRouteName="Feed"
-      activeColor="#004d40"
-      inactiveColor="#ffffff"
-      barStyle={{ backgroundColor: 'black' }}
+      activeColor="#fff"
+      inactiveColor="#0E436F"
+      barStyle={{ backgroundColor: '#4682B4' }}
       >
         <Tab.Screen 
             name="Home"

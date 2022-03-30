@@ -37,31 +37,26 @@ export const AuthProvider = ({ children }: any) => {
 
     const checkToken = async() => {
         const token = await AsyncStorage.getItem('token');
+        const usuario = await AsyncStorage.getItem('usuario');
         
         // No token, no autenticado
         if ( !token ) return dispatch({ type: 'notAuthenticated' });
 
         // Hay token
-       /* const resp = await cafeApi.get('/auth');
-        if ( resp.status !== 200 ) {
-            return dispatch({ type: 'notAuthenticated' });
-        }
-        
-        await AsyncStorage.setItem('token', resp.data.token );
         dispatch({ 
             type: 'signUp',
             payload: {
-                token: resp.data.token,
-                user: resp.data.usuario
+                token: token,
+                user: JSON.parse(usuario!)
             }
-        });*/
+        });
     }
 
     const signIn = async ( {email, password }: LoginData ) => {
         try{
 
             await auth().signInWithEmailAndPassword(email, password)
-            .then( ({ user }) => {
+            .then( async ({ user }) => {
                 dispatch({ 
                     type: 'signUp',
                     payload: {
@@ -70,6 +65,8 @@ export const AuthProvider = ({ children }: any) => {
                     }
                 });
 
+                await AsyncStorage.setItem('token',user.uid );
+                await AsyncStorage.setItem('usuario', JSON.stringify(user));
             })
 
         } catch(e){
@@ -82,7 +79,7 @@ export const AuthProvider = ({ children }: any) => {
             const { idToken } = await GoogleSignin.signIn();
             const googleCredential = auth.GoogleAuthProvider.credential(idToken);
             await  auth().signInWithCredential(googleCredential)
-            .then( ({ user }) => {
+            .then( async ({ user }) => {
                 dispatch({ 
                     type: 'signUp',
                     payload: {
@@ -90,6 +87,9 @@ export const AuthProvider = ({ children }: any) => {
                         user: user
                     }
                 });
+                
+                await AsyncStorage.setItem('token',user.uid );
+                await AsyncStorage.setItem('usuario', JSON.stringify(user));
             });
 
         } catch (error) {
