@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useContext, useEffect } from 'react';
-import { View, TouchableOpacity, Image, Keyboard, Platform, KeyboardAvoidingView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { View, TouchableOpacity, Image, Keyboard, Platform, KeyboardAvoidingView, Alert } from 'react-native';
 import { Text } from 'react-native-paper';
 
 import { Button } from '../components/formControls/Button';
@@ -18,23 +17,18 @@ interface Props extends StackScreenProps<any, any> {}
 
 export const LoginScreen = ({ navigation }: Props) => {
 
- // const navigator = useNavigation<any>();
 
-  const { signIn, signInGoogle} = useContext(AuthContext);
+  const { signIn, signInGoogle, errorMessage, removeError } = useContext(AuthContext);
 
   const { email, password, onChange } = useForm({
      email: '',
-     password: '' 
+     password: '',
   });
 
 const onLoginPressed = () => {
-  //navigator.navigate('HomeScreen');
-  console.log({email, password});
   Keyboard.dismiss();
   signIn({ email, password });
 }
-
-
 
 
 useEffect(() => {
@@ -45,6 +39,19 @@ useEffect(() => {
     offlineAccess: true,
   });
 }, []);
+
+  useEffect(() => {
+
+     if (errorMessage.length === 0) return;
+
+     Alert.alert('Login incorrecto', errorMessage,[{
+           text: 'Ok',
+           onPress: removeError
+         }]
+     );
+
+  }, [ errorMessage ])
+  
 
 
   return (
