@@ -10,11 +10,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  type AuthContextProps = {
     user: Usuariox | null;
     token: string | null;
+    errorMessage: string;
     status: 'checking' | 'authenticated' | 'not-authenticated';
     signUp: ( registerData: RegisterData ) => void;
     signIn: ( loginData: LoginData ) => void;
     signInGoogle: () => void;
     logOut: () => void;
+    removeError: () => void;
 
  }
 
@@ -22,6 +24,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
     status: 'checking',
     token: null,
     user: null,
+    errorMessage: '',
 }
 
 
@@ -69,8 +72,11 @@ export const AuthProvider = ({ children }: any) => {
                 await AsyncStorage.setItem('usuario', JSON.stringify(user));
             })
 
-        } catch(e){
-            console.log(e);
+        } catch(error){
+            dispatch({ 
+                type: 'addError', 
+                payload: error
+            })
         }
     };
 
@@ -108,23 +114,29 @@ export const AuthProvider = ({ children }: any) => {
                     type: 'signUp',
                     payload: {
                         token: user.uid,
-                        user: user
+                        user: user,
                     }
                 });
 
             })
-        }catch (e){
-            console.log(e);
+        }catch (error){
+            console.log(error);
         }
     };
 
     const logOut = async () => {
         try{
+            await AsyncStorage.removeItem('token');
+            await AsyncStorage.removeItem('usuario');
             await auth().signOut();
             dispatch({ type: 'logout' });
         }catch(e){
             console.log(e);
         }
+    };
+
+    const removeError = () => {
+        dispatch({ type: 'removeError' });
     };
 
     return (
@@ -134,7 +146,8 @@ export const AuthProvider = ({ children }: any) => {
                 signIn,
                 signInGoogle,
                 signUp,
-                logOut
+                logOut,
+                removeError,
             }}
         >
             { children }
