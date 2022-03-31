@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>286331386798-2u5pulq34mfe64iqt51680a643kdduo0.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.286331386798-2u5pulq34mfe64iqt51680a643kdduo0</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>286331386798-ruldph17b93ibc8n78cr0fikgojn9sb7.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBw6e4GbSULTO1BJXAV4grtZC_P3gbLuJ8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>286331386798</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.expensesApp</string>
+	<key>PROJECT_ID</key>
+	<string>expensereactapp</string>
+	<key>STORAGE_BUCKET</key>
+	<string>expensereactapp.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:286331386798:ios:226d207959cd3442fa263f</string>
+	<key>DATABASE_URL</key>
+	<string>https://expensereactapp-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
